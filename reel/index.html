@@ -14,20 +14,20 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap">
 <style>
 :root{
-  --ground:#FDF4E7;
+  --ground:#FAFCF2;
   --paper:#FFFFFF;
-  --ink:#5C4E38;
-  --muted:#8A7757;
-  --leaf:#F58BA0;
-  --leaf-deep:#C9415F;
-  --leaf-soft:#FDE8EC;
-  --band:#FBD3DB;
-  --rule:#F3E4CC;
-  --rule-strong:#E8CFA6;
-  --sun:#F5C265;
-  --sun-soft:#FFF4DC;
-  --wood:#7A6234;
-  --box:#FFFBF4;
+  --ink:#3E4A2A;
+  --muted:#77805F;
+  --leaf:#8DBF3F;
+  --leaf-deep:#5C8A22;
+  --leaf-soft:#EEF6D6;
+  --band:#DCEDB2;
+  --rule:#E3EDC9;
+  --rule-strong:#CBDCA3;
+  --sun:#F4C84A;
+  --sun-soft:#FFF6D6;
+  --wood:#A17C52;
+  --box:#FDFEF8;
   --display:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;
   --body:"Noto Sans JP","Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
 }
@@ -40,10 +40,10 @@ p{margin:0}
 ol,ul{margin:0;padding:0;list-style:none}
 img{max-width:100%;height:auto;display:block}
 b,strong{font-weight:700}
-.mk{background:linear-gradient(transparent 62%,#FBD3DB 62%)}
+.mk{background:linear-gradient(transparent 62%,#E4F2B4 62%)}
 
 /* 表紙 */
-.cover{position:relative;border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#FDE8EC 0%,#FFF6E6 100%);border:2px solid var(--rule-strong)}
+.cover{position:relative;border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#F1F9DC 0%,#FDFBE6 100%);border:2px solid var(--rule-strong)}
 .cover .scene{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;display:block}
 .cover-top{position:relative;min-height:0}
 .cover-in{position:relative;z-index:1;padding:22px clamp(18px,4.5vw,36px) 0;display:grid;grid-template-columns:1fr auto;grid-template-areas:"meta meta" "title title" "lead chibi";gap:10px 12px;align-items:end}
@@ -105,7 +105,7 @@ svg .lnb{stroke:var(--leaf);stroke-width:7;stroke-linecap:round}
 
 /* ステップカード */
 .recipe{background:var(--paper);border:2px solid var(--rule-strong);border-radius:22px;position:relative;overflow:hidden}
-.recipe-head{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px clamp(16px,4vw,30px);background:linear-gradient(90deg,#FBD3DB,#FDE8EC);border-bottom:2px solid var(--rule-strong)}
+.recipe-head{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px clamp(16px,4vw,30px);background:linear-gradient(90deg,#D6EAA6,#EAF5CF);border-bottom:2px solid var(--rule-strong)}
 .recipe-head .chibi-side{width:clamp(64px,14vw,92px);margin-block:-4px -22px}
 @media (max-width:480px){.recipe-head{grid-template-columns:auto 1fr}.recipe-head .chibi-side{display:none}}
 .num{font-family:var(--display);color:#fff;text-align:center;line-height:1.1;background:var(--leaf-deep);border-radius:16px;padding:8px 12px 10px;min-width:64px}
@@ -136,13 +136,13 @@ h3 em.only{background:var(--sun);color:#6B4E00}
 
 /* プロンプト枠 */
 .prompt{border:2px solid var(--rule-strong);border-radius:14px;background:var(--box);overflow:hidden}
-.prompt-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 8px 8px 14px;border-bottom:2px solid var(--rule-strong);background:#FDEEF1}
+.prompt-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 8px 8px 14px;border-bottom:2px solid var(--rule-strong);background:#F1F8DD}
 .prompt-head span{font-size:13px;font-weight:700;letter-spacing:.04em}
-.copy{appearance:none;border:0;border-radius:999px;background:var(--leaf-deep);color:#fff;font:700 14px var(--body);padding:9px 18px;cursor:pointer;white-space:nowrap;box-shadow:0 3px 0 #A5324D}
+.copy{appearance:none;border:0;border-radius:999px;background:var(--leaf-deep);color:#fff;font:700 14px var(--body);padding:9px 18px;cursor:pointer;white-space:nowrap;box-shadow:0 3px 0 #436A14}
 .copy:hover{filter:brightness(1.08)}
-.copy:active{transform:translateY(2px);box-shadow:0 1px 0 #A5324D}
+.copy:active{transform:translateY(2px);box-shadow:0 1px 0 #436A14}
 .copy:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
-.copy.is-ok{background:var(--wood);box-shadow:0 3px 0 #5C4A27}
+.copy.is-ok{background:var(--wood);box-shadow:0 3px 0 #7B5C39}
 .prompt pre{margin:0;padding:16px;max-height:340px;overflow:auto;white-space:pre-wrap;word-break:break-word;font:14.5px/1.85 var(--body);color:var(--ink)}
 .prompt pre:focus-visible{outline:3px solid var(--leaf);outline-offset:-3px}
 .small{font-size:13px;color:var(--muted)}
@@ -152,7 +152,7 @@ h3 em.only{background:var(--sun);color:#6B4E00}
 
 /* できたチェック */
 .done{display:flex;align-items:center;gap:10px;align-self:flex-start;cursor:pointer;font-weight:700;font-size:14.5px;border:2px solid var(--leaf);border-radius:999px;padding:8px 20px 8px 14px;color:var(--leaf-deep);background:#fff}
-.done input{width:18px;height:18px;accent-color:#C9415F;margin:0}
+.done input{width:18px;height:18px;accent-color:#5C8A22;margin:0}
 .done:has(input:checked){background:var(--leaf-soft)}
 .done:has(input:focus-visible){outline:3px solid var(--sun);outline-offset:2px}
 
@@ -163,7 +163,7 @@ h3 em.only{background:var(--sun);color:#6B4E00}
 .money span{font-size:13px;color:var(--muted)}
 
 /* 今日これだけ・おわりに */
-.today{border:2px solid var(--leaf);border-radius:22px;padding:22px clamp(16px,4vw,30px);display:grid;grid-template-columns:1fr auto;gap:10px 16px;background:radial-gradient(110% 130% at 100% 100%,#FBD3DB 0%,#FFFFFF 62%)}
+.today{border:2px solid var(--leaf);border-radius:22px;padding:22px clamp(16px,4vw,30px);display:grid;grid-template-columns:1fr auto;gap:10px 16px;background:radial-gradient(110% 130% at 100% 100%,#E4F2B4 0%,#FFFFFF 62%)}
 .today>*{grid-column:1}
 .today .chibi-side{grid-column:2;grid-row:1 / span 4;align-self:end;width:clamp(84px,18vw,128px)}
 @media (max-width:560px){.today{grid-template-columns:1fr}.today .chibi-side{grid-column:1;grid-row:auto;justify-self:end;margin-top:-40px}}
@@ -174,11 +174,11 @@ h3 em.only{background:var(--sun);color:#6B4E00}
 .closing .wish li::before{content:"";width:12px;height:12px;border-radius:0 60% 0 60%;background:var(--leaf);margin-top:10px}
 .banner{display:block;border-radius:14px;overflow:hidden;border:2px solid var(--rule-strong)}
 .banner img{width:100%}
-.cta{display:flex;justify-content:center;align-items:center;gap:10px;text-decoration:none;color:#fff;background:var(--leaf-deep);border-radius:999px;padding:15px 22px;font-family:var(--display);font-weight:900;font-size:18px;box-shadow:0 4px 0 #A5324D;text-align:center}
+.cta{display:flex;justify-content:center;align-items:center;gap:10px;text-decoration:none;color:#fff;background:var(--leaf-deep);border-radius:999px;padding:15px 22px;font-family:var(--display);font-weight:900;font-size:18px;box-shadow:0 4px 0 #436A14;text-align:center}
 .cta:hover{filter:brightness(1.07)}
 .cta:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
 footer{font-size:12px;letter-spacing:.14em;color:var(--muted);text-align:center}
-.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:#5C4E38;color:#fff;font-weight:700;font-size:14px;border-radius:999px;padding:10px 20px;opacity:0;pointer-events:none;transition:.25s}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:#3E4A2A;color:#fff;font-weight:700;font-size:14px;border-radius:999px;padding:10px 20px;opacity:0;pointer-events:none;transition:.25s}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media (min-width:900px){.wrap{max-width:820px}}
@@ -207,15 +207,15 @@ footer{font-size:12px;letter-spacing:.14em;color:var(--muted);text-align:center}
     <div class="cover">
       <div class="cover-top">
       <svg class="scene" viewBox="0 0 760 300" preserveAspectRatio="xMidYMax slice" role="img" aria-label="やわらかい丸と、縦長の動画のコマが並ぶ飾り">
-        <circle cx="660" cy="52" r="36" fill="#F5C265" opacity=".55"/><circle cx="660" cy="52" r="56" fill="#F5C265" opacity=".18"/>
-        <circle cx="60" cy="250" r="90" fill="#FBD3DB" opacity=".55"/>
-        <circle cx="420" cy="290" r="120" fill="#FDE8EC" opacity=".8"/>
-        <g opacity=".5" fill="none" stroke="#F58BA0" stroke-width="3">
+        <circle cx="660" cy="52" r="36" fill="#F4C84A" opacity=".55"/><circle cx="660" cy="52" r="56" fill="#F4C84A" opacity=".18"/>
+        <circle cx="60" cy="250" r="90" fill="#DCEDB2" opacity=".55"/>
+        <circle cx="420" cy="290" r="120" fill="#EEF6D6" opacity=".8"/>
+        <g opacity=".5" fill="none" stroke="#8DBF3F" stroke-width="3">
           <rect x="560" y="150" width="54" height="96" rx="9" transform="rotate(8 587 198)"/>
           <rect x="632" y="168" width="54" height="96" rx="9" transform="rotate(-6 659 216)"/>
         </g>
-        <path d="M580 186 l18 11 l-18 11Z" fill="#F58BA0" opacity=".5" transform="rotate(8 587 198)"/>
-        <path d="M652 205 l18 11 l-18 11Z" fill="#F58BA0" opacity=".5" transform="rotate(-6 659 216)"/>
+        <path d="M580 186 l18 11 l-18 11Z" fill="#8DBF3F" opacity=".5" transform="rotate(8 587 198)"/>
+        <path d="M652 205 l18 11 l-18 11Z" fill="#8DBF3F" opacity=".5" transform="rotate(-6 659 216)"/>
       </svg>
       <div class="cover-in">
         <span class="meta">あこ在宅｜動画の特典</span>
@@ -270,7 +270,7 @@ footer{font-size:12px;letter-spacing:.14em;color:var(--muted);text-align:center}
         <rect class="bx-sun" x="568" y="14" width="128" height="118" rx="14"/>
         <text class="n" x="580" y="40" style="fill:#8A6500">5日目</text><text class="tl" x="580" y="68">投稿</text>
         <text class="s" x="580" y="92">インスタ</text><text class="s" x="580" y="112">15分</text>
-        <rect x="4" y="150" width="692" height="50" rx="14" fill="#FDE8EC"/>
+        <rect x="4" y="150" width="692" height="50" rx="14" fill="#EEF6D6"/>
         <text class="t" x="24" y="181">2本目からは、撮った素材をそのまま使い回せます</text>
         <text class="s" x="446" y="181">やることは毎回同じ。だから早くなる</text>
       </svg>
@@ -421,9 +421,9 @@ footer{font-size:12px;letter-spacing:.14em;color:var(--muted);text-align:center}
           <text class="s" x="24" y="158" style="fill:#B4583A">→ 言い間違えるたびに撮り直し</text>
           <rect class="bx-on" x="364" y="14" width="330" height="162" rx="14"/>
           <text class="n" x="382" y="42">かんたんな撮り方</text>
-          <rect x="392" y="54" width="62" height="108" rx="9" fill="#fff" stroke="#F58BA0" stroke-width="2.4"/>
-          <rect x="408" y="112" width="30" height="26" rx="5" fill="#F5C265"/><path d="M438 118 q10 0 10 8 q0 8 -10 8" fill="none" stroke="#F5C265" stroke-width="3"/>
-          <path d="M414 106 q3 -8 0 -14 M424 106 q3 -8 0 -14 M434 106 q3 -8 0 -14" stroke="#EBCFA8" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <rect x="392" y="54" width="62" height="108" rx="9" fill="#fff" stroke="#8DBF3F" stroke-width="2.4"/>
+          <rect x="408" y="112" width="30" height="26" rx="5" fill="#F4C84A"/><path d="M438 118 q10 0 10 8 q0 8 -10 8" fill="none" stroke="#F4C84A" stroke-width="3"/>
+          <path d="M414 106 q3 -8 0 -14 M424 106 q3 -8 0 -14 M434 106 q3 -8 0 -14" stroke="#CBDCA3" stroke-width="2.4" fill="none" stroke-linecap="round"/>
           <text class="t" x="476" y="80">机の上を映す</text>
           <text class="t" x="476" y="104">タイムラプスで置くだけ</text>
           <text class="t" x="476" y="128">文字はあとから入れる</text>
@@ -497,16 +497,16 @@ footer{font-size:12px;letter-spacing:.14em;color:var(--muted);text-align:center}
       <figure class="fig">
         <svg viewBox="0 0 700 158" role="img" aria-label="撮った映像のはじめと終わりのいらない部分を切って、20秒くらいにして、もとの音を消す">
           <text class="n" x="8" y="30">撮ったまま</text>
-          <rect x="120" y="12" width="570" height="28" rx="6" fill="#FBD3DB"/>
+          <rect x="120" y="12" width="570" height="28" rx="6" fill="#DCEDB2"/>
           <rect x="120" y="12" width="84" height="28" rx="6" fill="#EFD7CC"/><rect x="560" y="12" width="130" height="28" rx="6" fill="#EFD7CC"/>
           <text class="s" x="132" y="31" style="fill:#B4583A">いらない</text><text class="s" x="596" y="31" style="fill:#B4583A">いらない</text>
           <path class="ar" d="M380 48 V62"/><path class="arh" d="M372 60 L380 72 L388 60 Z"/>
           <text class="n" x="8" y="100">① 切る</text>
-          <rect x="204" y="82" width="356" height="28" rx="6" fill="#F58BA0"/>
+          <rect x="204" y="82" width="356" height="28" rx="6" fill="#8DBF3F"/>
           <text class="pt" x="330" y="101">20秒くらい</text>
           <text class="s" x="574" y="101">台本の長さに</text>
           <text class="n" x="8" y="142">② 音を消す</text>
-          <rect x="204" y="124" width="356" height="28" rx="6" fill="#fff" stroke="#EBCFA8" stroke-width="2" stroke-dasharray="6 5"/>
+          <rect x="204" y="124" width="356" height="28" rx="6" fill="#fff" stroke="#CBDCA3" stroke-width="2" stroke-dasharray="6 5"/>
           <text class="s" x="318" y="143">もとの音は 0 に</text>
           <text class="s" x="574" y="143">曲はSTEP 5で</text>
         </svg>
@@ -562,20 +562,20 @@ footer{font-size:12px;letter-spacing:.14em;color:var(--muted);text-align:center}
       <figure class="fig">
         <svg viewBox="0 0 700 250" role="img" aria-label="文字は画面のまんなかあたりに置く。上と下と右はしは、インスタの文字やボタンで隠れる。表紙の文字もまんなかに置く">
           <text class="n" x="60" y="24">文字を置く場所</text>
-          <rect x="60" y="36" width="118" height="206" rx="14" fill="#fff" stroke="#EBCFA8" stroke-width="2.4"/>
+          <rect x="60" y="36" width="118" height="206" rx="14" fill="#fff" stroke="#CBDCA3" stroke-width="2.4"/>
           <rect x="62" y="38" width="114" height="34" rx="12" fill="#EFD7CC" opacity=".8"/>
           <rect x="62" y="186" width="114" height="54" rx="12" fill="#EFD7CC" opacity=".8"/>
           <rect x="150" y="76" width="26" height="106" fill="#EFD7CC" opacity=".8"/>
-          <rect x="70" y="112" width="74" height="40" rx="8" fill="#FDE8EC" stroke="#F58BA0" stroke-width="2"/>
-          <text class="s" x="80" y="137" style="fill:#C9415F;font-weight:700">文字はここ</text>
+          <rect x="70" y="112" width="74" height="40" rx="8" fill="#EEF6D6" stroke="#8DBF3F" stroke-width="2"/>
+          <text class="s" x="80" y="137" style="fill:#5C8A22;font-weight:700">文字はここ</text>
           <text class="s" x="196" y="60" style="fill:#B4583A">上：アカウント名などで隠れる</text>
           <text class="s" x="196" y="134" style="fill:#B4583A">右：いいね・コメントのボタン</text>
           <text class="s" x="196" y="218" style="fill:#B4583A">下：キャプションで隠れる</text>
           <text class="n" x="452" y="24">表紙の文字を置く場所</text>
-          <rect x="452" y="36" width="118" height="206" rx="14" fill="#fff" stroke="#EBCFA8" stroke-width="2.4"/>
+          <rect x="452" y="36" width="118" height="206" rx="14" fill="#fff" stroke="#CBDCA3" stroke-width="2.4"/>
           <rect x="454" y="38" width="114" height="42" rx="12" fill="#EFD7CC" opacity=".8"/>
           <rect x="454" y="198" width="114" height="42" rx="12" fill="#EFD7CC" opacity=".8"/>
-          <rect x="462" y="98" width="98" height="82" rx="8" fill="#FFF4DC" stroke="#F5C265" stroke-width="2"/>
+          <rect x="462" y="98" width="98" height="82" rx="8" fill="#FFF6D6" stroke="#F4C84A" stroke-width="2"/>
           <text class="s" x="480" y="134" style="fill:#6B4E00;font-weight:700">タイトルは</text>
           <text class="s" x="480" y="154" style="fill:#6B4E00;font-weight:700">まんなかに</text>
           <text class="s" x="584" y="64" style="fill:#B4583A">一覧では</text>
