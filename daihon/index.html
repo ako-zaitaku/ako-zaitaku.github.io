@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>リール台本アプリ｜あこ在宅</title>
+<meta name="description" content="伸びているリールの画面収録を選ぶだけで、文字起こし・伸びている理由の分析・台本づくりまで進められます。">
+<meta property="og:title" content="リール台本アプリ｜あこ在宅">
+<meta property="og:description" content="画面収録したリールを選ぶだけ。文字起こしから台本まで。">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#8DBF3F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ground:#FAFCF2;--paper:#FFFFFF;--ink:#3E4A2A;--muted:#6E7757;--leaf:#8DBF3F;--leaf-deep:#5C8A22;--leaf-soft:#EEF6D6;
+  --rule:#E3EDC9;--rule-strong:#CBDCA3;--sun:#F4C84A;--sun-soft:#FFF6D6;--wood:#A17C52;--box:#FDFEF8;--warn:#B4583A;--warn-soft:#FBEFEA;
+  --display:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;
+  --body:"Noto Sans JP","Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.85;padding:0 16px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding-block:22px 72px;display:flex;flex-direction:column;gap:22px}
+h1,h2,h3{font-family:var(--display);font-weight:900;line-height:1.45;margin:0;text-wrap:balance}
+p{margin:0}
+ol,ul{margin:0;padding:0;list-style:none}
+img{max-width:100%;height:auto;display:block}
+[hidden]{display:none!important}
+
+.top{position:relative;border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#F1F9DC 0%,#FDFBE6 100%);border:2px solid var(--rule-strong);padding:20px clamp(16px,4.5vw,32px);display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:end}
+.top .meta{grid-column:1 / -1;justify-self:start;font-size:12.5px;font-weight:700;letter-spacing:.12em;color:var(--leaf-deep);background:#fff;border:1.5px solid var(--rule-strong);border-radius:999px;padding:2px 14px}
+.top h1{font-size:clamp(28px,7.6vw,42px);line-height:1.3}
+.top h1 .nb{display:inline-block;white-space:nowrap}
+.top h1 small{display:block;font-size:.4em;color:var(--leaf-deep);letter-spacing:.04em;margin-bottom:4px}
+.top p{grid-column:1;font-size:14.5px;line-height:1.8}
+.top img{grid-column:2;grid-row:2 / span 2;width:clamp(84px,20vw,128px)}
+
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;counter-reset:f}
+.flow li{counter-increment:f;text-align:center;font-size:11.5px;font-weight:700;color:var(--muted);line-height:1.4;display:flex;flex-direction:column;align-items:center;gap:4px}
+.flow li::before{content:counter(f);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#fff;border:2px solid var(--rule-strong);font-family:var(--display);font-size:14px;color:var(--muted)}
+.flow li.on{color:var(--leaf-deep)}
+.flow li.on::before{background:var(--leaf-deep);border-color:var(--leaf-deep);color:#fff}
+.flow li.ok::before{background:var(--leaf-soft);border-color:var(--leaf);color:var(--leaf-deep)}
+
+.card{background:var(--paper);border:2px solid var(--rule-strong);border-radius:20px;overflow:hidden}
+.card-head{display:flex;gap:12px;align-items:center;padding:12px clamp(14px,4vw,24px);background:linear-gradient(90deg,#D6EAA6,#EAF5CF);border-bottom:2px solid var(--rule-strong)}
+.card-head .no{flex:none;font-family:var(--display);font-weight:900;color:#fff;background:var(--leaf-deep);border-radius:12px;padding:2px 10px;font-size:13px;letter-spacing:.08em}
+.card-head h2{font-size:clamp(18px,4.4vw,21px)}
+.card-body{padding:18px clamp(14px,4vw,24px) 22px;display:flex;flex-direction:column;gap:14px}
+.small{font-size:13.5px;color:var(--muted)}
+.mk{background:linear-gradient(transparent 62%,#E4F2B4 62%)}
+
+.pick{display:flex;flex-direction:column;align-items:center;gap:8px;border:2.5px dashed var(--leaf);border-radius:18px;padding:22px 14px;background:var(--leaf-soft);text-align:center;cursor:pointer}
+.pick:focus-within{outline:3px solid var(--sun);outline-offset:3px}
+.pick input{position:absolute;opacity:0;width:1px;height:1px}
+.pick b{font-family:var(--display);font-size:19px;color:var(--leaf-deep)}
+.pick .btn{pointer-events:none}
+
+details.how{border:1.5px solid var(--rule-strong);border-radius:14px;background:var(--box)}
+details.how summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:14.5px;color:var(--leaf-deep)}
+details.how>div{padding:0 14px 14px;display:flex;flex-direction:column;gap:10px;font-size:14.5px}
+details.how h3{font-size:15px}
+.steps{counter-reset:s;display:flex;flex-direction:column;gap:6px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:24px 1fr;gap:8px}
+.steps li::before{content:counter(s);width:22px;height:22px;border-radius:50%;background:var(--leaf);color:#fff;font-family:var(--display);font-weight:900;font-size:12.5px;display:grid;place-items:center;margin-top:4px}
+
+.btn{appearance:none;border:0;border-radius:999px;background:var(--leaf-deep);color:#fff;font:700 15.5px var(--body);padding:12px 22px;cursor:pointer;box-shadow:0 3px 0 #436A14;text-align:center}
+.btn:hover{filter:brightness(1.07)}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #436A14}
+.btn:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.sub{background:#fff;color:var(--leaf-deep);border:2px solid var(--leaf);box-shadow:none;padding:9px 18px;font-size:14.5px}
+.btn.sm{padding:7px 14px;font-size:13.5px}
+.btn.wide{width:100%}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+
+.busy{display:flex;align-items:center;gap:12px;background:var(--sun-soft);border:1.5px solid #F1DE9B;border-radius:14px;padding:12px 14px;font-weight:700;font-size:14.5px}
+.busy::before{content:"";flex:none;width:20px;height:20px;border-radius:50%;border:3px solid #F1DE9B;border-top-color:#B58A00;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err{background:var(--warn-soft);border:1.5px solid #E5B9A6;color:var(--warn);border-radius:14px;padding:12px 14px;font-weight:700;font-size:14.5px}
+
+.box{border:2px solid var(--rule-strong);border-radius:14px;background:var(--box);overflow:hidden}
+.box-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 6px 6px 14px;border-bottom:2px solid var(--rule-strong);background:#F1F8DD}
+.box-head span{font-size:13px;font-weight:700}
+.box pre{margin:0;padding:14px;max-height:300px;overflow:auto;white-space:pre-wrap;word-break:break-word;font:15px/1.85 var(--body);color:var(--ink)}
+.copy{appearance:none;border:0;border-radius:999px;background:var(--leaf-deep);color:#fff;font:700 13px var(--body);padding:6px 14px;cursor:pointer;white-space:nowrap}
+.copy.is-ok{background:var(--wood)}
+
+.ana{display:flex;flex-direction:column;gap:10px}
+.ana div{border-left:4px solid var(--leaf);padding:2px 0 2px 12px}
+.ana dt{font-size:12.5px;font-weight:700;color:var(--leaf-deep);letter-spacing:.06em}
+.ana dd{margin:0;font-size:15px}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chain span{background:var(--leaf-soft);border:1.5px solid var(--leaf);border-radius:999px;padding:1px 10px;font-size:13.5px;font-weight:700}
+.chain i{font-style:normal;color:var(--leaf)}
+.sum{background:var(--sun-soft);border-radius:14px;padding:12px 14px;border:1.5px solid #F1DE9B;font-size:15px}
+.sum b{display:block;font-family:var(--display);color:#6B4E00;font-size:14.5px}
+.pts li{display:grid;grid-template-columns:18px 1fr;gap:6px;font-size:14.5px}
+.pts li::before{content:"";width:10px;height:10px;border-radius:0 60% 0 60%;background:var(--leaf);margin-top:9px}
+
+label.q{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px}
+label.q small{font-weight:400;color:var(--muted);font-size:13px}
+input[type=text],textarea{width:100%;border:2px solid var(--rule-strong);border-radius:12px;padding:10px 12px;font:16px var(--body);color:var(--ink);background:#fff}
+input[type=text]:focus-visible,textarea:focus-visible{outline:3px solid var(--leaf);outline-offset:1px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{appearance:none;border:1.5px solid var(--rule-strong);background:#fff;border-radius:999px;padding:3px 12px;font:13.5px var(--body);color:var(--ink);cursor:pointer}
+.chip:hover{border-color:var(--leaf)}
+
+.sug{display:flex;flex-direction:column;gap:10px}
+.sug li{border:2px solid var(--rule);border-radius:14px;padding:12px 14px;background:var(--box);display:flex;flex-direction:column;gap:8px}
+.sug b{font-family:var(--display);font-size:16.5px}
+.kw{display:flex;flex-wrap:wrap;gap:6px}
+.kw button{appearance:none;border:1.5px dashed var(--wood);background:#fff;color:var(--wood);border-radius:10px;padding:3px 10px;font:700 14px var(--body);cursor:pointer}
+.kw button::after{content:"  コピー";font-size:11px;font-weight:400}
+
+.drafts{display:flex;flex-direction:column;gap:12px}
+.draft{border:2px solid var(--rule-strong);border-radius:16px;background:#fff;overflow:hidden}
+.draft-head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 8px 8px 14px;background:var(--leaf-soft);border-bottom:2px solid var(--rule)}
+.draft-head b{font-family:var(--display);color:var(--leaf-deep);min-width:0;line-height:1.5}
+.draft-head .btn{flex:none;white-space:nowrap}
+.draft pre{margin:0;padding:12px 14px;white-space:pre-wrap;word-break:break-word;font:15px/1.85 var(--body)}
+.draft .len{padding:0 14px 10px;font-size:12.5px;color:var(--muted)}
+
+.final{border:2.5px solid var(--leaf);border-radius:18px;background:radial-gradient(110% 130% at 100% 100%,#E4F2B4 0%,#FFFFFF 62%);padding:16px;display:flex;flex-direction:column;gap:12px}
+.final h3{font-size:19px}
+.meter{font-size:13.5px;font-weight:700;color:var(--leaf-deep)}
+.meter.over{color:var(--warn)}
+.checks li{display:grid;grid-template-columns:22px 1fr;gap:8px;font-size:14.5px}
+.checks input{width:18px;height:18px;accent-color:#5C8A22;margin:5px 0 0}
+.tips li{display:grid;grid-template-columns:16px 1fr;gap:6px;font-size:14.5px}
+.tips li::before{content:"・";color:#B58A00;font-weight:700}
+
+.foot{font-size:12.5px;color:var(--muted);display:flex;flex-direction:column;gap:6px;border-top:1.5px dashed var(--rule-strong);padding-top:14px}
+.foot a{color:var(--leaf-deep)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:#3E4A2A;color:#fff;font-weight:700;font-size:14px;border-radius:999px;padding:10px 20px;opacity:0;pointer-events:none;transition:.25s;z-index:9}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:420px){.flow li{font-size:10.5px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <header class="top">
+    <span class="meta">あこ在宅｜インスタ×AI まるごとセット</span>
+    <h1><small>画面収録したリールを選ぶだけ</small><span class="nb">リール</span><span class="nb">台本アプリ</span></h1>
+    <p>伸びているリールの<span class="mk">文字起こし → 伸びている理由の分析 → 台本づくり</span>まで、この1ページで進められます。</p>
+    <img src="chibi.webp" alt="スマホを持って案内するあこ" width="295" height="520">
+  </header>
+
+  <ol class="flow" id="flow" aria-label="進み具合">
+    <li data-s="1">動画を選ぶ</li><li data-s="2">文字起こし</li><li data-s="3">3つの質問</li><li data-s="4">台本3案</li><li data-s="5">仕上げ</li>
+  </ol>
+
+  <!-- 1. 動画を選ぶ -->
+  <section class="card" id="s1">
+    <div class="card-head"><span class="no">1</span><h2>参考リールの動画を選ぶ</h2></div>
+    <div class="card-body">
+      <label class="pick">
+        <input type="file" id="file" accept="video/*">
+        <b>動画を選ぶ</b>
+        <span class="small">画面収録しておいたリールを、写真アプリから選んでください</span>
+        <span class="btn">ここをタップ</span>
+      </label>
+      <details class="how">
+        <summary>リールの画面収録のしかた</summary>
+        <div>
+          <h3>iPhone</h3>
+          <ol class="steps">
+            <li>画面の右上から下にスワイプして、コントロールセンターを開く</li>
+            <li>丸い「画面収録」ボタンを押す（3秒後に始まります）</li>
+            <li>インスタに戻り、参考にしたいリールを最初から最後まで、音を出して再生する</li>
+            <li>もう一度コントロールセンターを開き、赤いボタンで止める（写真アプリに保存されます）</li>
+          </ol>
+          <p class="small">ボタンが見当たらないときは「設定」→「コントロールセンター」から「画面収録」を追加します。</p>
+          <h3>Android</h3>
+          <ol class="steps">
+            <li>画面の上から下に2回スワイプして、クイック設定を開く</li>
+            <li>「スクリーンレコード」（機種によって名前が違います）を押し、音声の録音を「メディアの音」にして開始</li>
+            <li>リールを最初から最後まで再生して、通知から停止する</li>
+          </ol>
+          <p class="small">画面収録した動画は、台本づくりの参考として自分で使うだけにしてください。そのまま投稿したり、人に配ったりしないでくださいね。</p>
+        </div>
+      </details>
+      <div class="busy" id="busy1" hidden></div>
+      <div class="err" id="err1" hidden></div>
+    </div>
+  </section>
+
+  <!-- 2. 文字起こしと分析 -->
+  <section class="card" id="s2" hidden>
+    <div class="card-head"><span class="no">2</span><h2>文字起こし</h2></div>
+    <div class="card-body">
+      <div class="box">
+        <div class="box-head"><span>話している言葉</span><button class="copy" data-copy="transcript">コピー</button></div>
+        <pre id="transcript"></pre>
+      </div>
+      <div class="box" id="onscreenBox">
+        <div class="box-head"><span>画面に出ている文字</span><button class="copy" data-copy="onscreen">コピー</button></div>
+        <pre id="onscreen"></pre>
+      </div>
+      <button class="btn wide" id="toAnalysis">このまま進める（なぜ伸びているか見る）</button>
+      <div id="analysis" class="ana" hidden>
+        <h3>このリールが伸びている理由</h3>
+        <div><dt>最初の一言</dt><dd id="a-hook"></dd></div>
+        <div><dt>続きを見たくさせているところ</dt><dd id="a-keep"></dd></div>
+        <div><dt>話の流れ</dt><dd class="chain" id="a-flow"></dd></div>
+        <div><dt>締め方</dt><dd id="a-ending"></dd></div>
+        <div><dt>まねできる「型」</dt><dd><ul class="pts" id="a-points"></ul></dd></div>
+        <p class="sum"><b>ひとことで言うと</b><span id="a-summary"></span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 3つの質問 -->
+  <section class="card" id="s3" hidden>
+    <div class="card-head"><span class="no">3</span><h2>3つの質問に答える</h2></div>
+    <div class="card-body">
+      <label class="q">① ジャンルは？
+        <input type="text" id="genre" placeholder="例：お得情報">
+        <span class="chips"><button type="button" class="chip" data-fill="genre">お得情報</button><button type="button" class="chip" data-fill="genre">節約</button><button type="button" class="chip" data-fill="genre">家事ラク</button><button type="button" class="chip" data-fill="genre">子育てグッズ</button></span>
+      </label>
+      <label class="q">② 届けたいのは、どんな人？
+        <input type="text" id="target" placeholder="例：仕事が忙しい30代の女性">
+      </label>
+      <label class="q">③ 紹介する商品は？<small>まだ決まっていなければ「提案して」を押してください</small>
+        <input type="text" id="product" placeholder="例：大容量の洗濯ネット">
+      </label>
+      <div class="row">
+        <button class="btn" id="toDrafts">この内容で台本を作る</button>
+        <button class="btn sub" id="toSuggest">提案して</button>
+      </div>
+      <div class="busy" id="busy3" hidden></div>
+      <div class="err" id="err3" hidden></div>
+      <div id="suggest" hidden>
+        <p class="small" style="margin-bottom:8px">このリールの流れと相性のいい商品です。キーワードを押すとコピーされるので、<a href="https://affiliate.rakuten.co.jp/" target="_blank" rel="noopener">楽天アフィリエイト</a>の検索欄に貼って探してみてください。検索結果に出る「料率」は、売れたときにもらえる報酬の割合です。</p>
+        <ul class="sug" id="sugList"></ul>
+        <p class="small" style="margin-top:10px">決めた商品を、上の③に入れて「この内容で台本を作る」を押してください。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 台本3パターン -->
+  <section class="card" id="s4" hidden>
+    <div class="card-head"><span class="no">4</span><h2>台本3パターン</h2></div>
+    <div class="card-body">
+      <p class="small">参考にしたのは話の流れだけです。気に入ったものを1つ選んでください。</p>
+      <div class="drafts" id="drafts"></div>
+      <button class="btn sub" id="again">別の3パターンを出す</button>
+      <div class="busy" id="busy4" hidden></div>
+      <div class="err" id="err4" hidden></div>
+    </div>
+  </section>
+
+  <!-- 5. 仕上げ -->
+  <section class="card" id="s5" hidden>
+    <div class="card-head"><span class="no">5</span><h2>リール用に整えた台本</h2></div>
+    <div class="card-body">
+      <div class="final">
+        <h3>できあがった台本</h3>
+        <div class="box">
+          <div class="box-head"><span id="meter" class="meter"></span><button class="copy" data-copy="finalScript">コピー</button></div>
+          <pre id="finalScript"></pre>
+        </div>
+        <div class="box">
+          <div class="box-head"><span>投稿文の案</span><button class="copy" data-copy="finalCaption">コピー</button></div>
+          <pre id="finalCaption"></pre>
+        </div>
+        <div><b style="font-size:14.5px">撮る映像のアイデア</b><ul class="tips" id="finalTips"></ul></div>
+      </div>
+      <div class="row">
+        <button class="btn sub" data-req="もう少し短くして">もう少し短くして</button>
+        <button class="btn sub" data-req="もっとやわらかい話し言葉にして">もっとやわらかく</button>
+        <button class="btn sub" data-req="最初の一言を、もっと思わず指が止まるものにして">最初の一言を強く</button>
+      </div>
+      <label class="q">ほかに直してほしいところ
+        <span class="row" style="flex-wrap:nowrap"><input type="text" id="request" placeholder="例：2行目をもっと具体的に"><button class="btn sm" id="sendReq">直す</button></span>
+      </label>
+      <div class="busy" id="busy5" hidden></div>
+      <div class="err" id="err5" hidden></div>
+      <div>
+        <b style="font-size:15px">使う前に、自分の目でチェック</b>
+        <ul class="checks" style="margin-top:6px">
+          <li><input type="checkbox" id="c1"><label for="c1">声に出して読んで、30秒くらいで読み切れる</label></li>
+          <li><input type="checkbox" id="c2"><label for="c2">参考にしたリールと、まるっきり同じ言い回しになっていない</label></li>
+          <li><input type="checkbox" id="c3"><label for="c3">使ったことがない商品なのに「使ってよかった」と書いていない</label></li>
+          <li><input type="checkbox" id="c4"><label for="c4">リールの投稿文と、リンクを貼るストーリーズに「#PR」が入っている</label></li>
+          <li><input type="checkbox" id="c5"><label for="c5">自分らしくない言葉は、自分の言葉に直した</label></li>
+        </ul>
+      </div>
+      <button class="btn sub" id="restart">別のリールでやり直す</button>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p>このアプリは、GoogleのAI（Gemini）の無料枠で動いています。たくさん使われた日は混み合って、翌日まで使えないことがあります。</p>
+    <p>選んだ動画の音声と画面の一部は、文字起こしのためにGoogleに送られます（無料枠では、AIの改善に使われることがあります）。人の顔や個人情報が映った動画は選ばないでください。</p>
+    <p>AIが出す内容は100％正しいとは限りません。投稿する前に、必ず自分の目で確認してください。</p>
+    <p>あこ在宅｜インスタ×AI まるごとセット</p>
+  </footer>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  const API = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? '' : 'https://ako-daihon.youso-bunkai.workers.dev';
+  const $ = id => document.getElementById(id);
+  const KEY = 'ako-daihon-v1';
+  let st = {};
+  try { st = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { st = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} };
+
+  function toast(t) { const el = $('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 1800); }
+  function busy(n, text) { const el = $('busy' + n); if (!el) return; el.hidden = !text; el.textContent = text || ''; }
+  function err(n, text) { const el = $('err' + n); if (!el) return; el.hidden = !text; el.textContent = text || ''; }
+  async function copyText(t) {
+    try { await navigator.clipboard.writeText(t); return true; }
+    catch (e) { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove(); return ok; }
+  }
+  async function post(path, body, raw) {
+    const r = await fetch(API + path, raw ? { method: 'POST', body: raw.body, headers: raw.headers } : { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error || 'うまくいきませんでした。もう一度お試しください。');
+    return d;
+  }
+  function stage(n) {
+    document.querySelectorAll('#flow li').forEach(li => { const s = +li.dataset.s; li.classList.toggle('on', s === n); li.classList.toggle('ok', s < n); });
+  }
+  const scrollTo = id => $(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // ---------- 動画から、音声（16kHz・モノラルのWAV）と画面を数枚取り出す ----------
+  function wav(buf) {
+    const d = buf.getChannelData(0), n = d.length, out = new DataView(new ArrayBuffer(44 + n * 2));
+    const w = (o, s) => { for (let i = 0; i < s.length; i++) out.setUint8(o + i, s.charCodeAt(i)); };
+    w(0, 'RIFF'); out.setUint32(4, 36 + n * 2, true); w(8, 'WAVE'); w(12, 'fmt '); out.setUint32(16, 16, true);
+    out.setUint16(20, 1, true); out.setUint16(22, 1, true); out.setUint32(24, 16000, true); out.setUint32(28, 32000, true);
+    out.setUint16(32, 2, true); out.setUint16(34, 16, true); w(36, 'data'); out.setUint32(40, n * 2, true);
+    for (let i = 0; i < n; i++) { const v = Math.max(-1, Math.min(1, d[i])); out.setInt16(44 + i * 2, v < 0 ? v * 0x8000 : v * 0x7fff, true); }
+    return out.buffer;
+  }
+  function b64(ab) {
+    const u = new Uint8Array(ab); let s = '';
+    for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000));
+    return btoa(s);
+  }
+  async function extractAudio(file) {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new Ctx();
+    try {
+      const ab = await file.arrayBuffer();
+      const audio = await new Promise((res, rej) => { const p = ctx.decodeAudioData(ab, res, rej); if (p && p.then) p.then(res, rej); });
+      const dur = Math.min(audio.duration, 180);
+      const off = new OfflineAudioContext(1, Math.ceil(dur * 16000), 16000);
+      const src = off.createBufferSource(); src.buffer = audio; src.connect(off.destination); src.start(0, 0, dur);
+      const out = await off.startRendering();
+      let peak = 0; const d = out.getChannelData(0); for (let i = 0; i < d.length; i += 160) peak = Math.max(peak, Math.abs(d[i]));
+      return { audio: b64(wav(out)), silent: peak < 0.01, duration: audio.duration };
+    } finally { try { ctx.close(); } catch (e) {} }
+  }
+  function extractFrames(file) {
+    return new Promise(resolve => {
+      const v = document.createElement('video'); const url = URL.createObjectURL(file); const frames = [];
+      v.muted = true; v.playsInline = true; v.preload = 'auto'; v.src = url;
+      const done = () => { URL.revokeObjectURL(url); resolve(frames); };
+      const timer = setTimeout(done, 15000);
+      v.addEventListener('error', () => { clearTimeout(timer); done(); });
+      v.addEventListener('loadedmetadata', async () => {
+        const dur = v.duration || 0;
+        const at = [0.4, 1.5, dur * 0.3, dur * 0.55, dur * 0.85].filter(t => t > 0 && t < dur);
+        const c = document.createElement('canvas'); const g = c.getContext('2d');
+        for (const t of at) {
+          await new Promise(r => { const on = () => { v.removeEventListener('seeked', on); r(); }; v.addEventListener('seeked', on); v.currentTime = t; setTimeout(r, 3000); });
+          const W = 360, H = Math.round(W * (v.videoHeight || 640) / (v.videoWidth || 360));
+          c.width = W; c.height = H; try { g.drawImage(v, 0, 0, W, H); frames.push(c.toDataURL('image/jpeg', 0.7).split(',')[1]); } catch (e) {}
+        }
+        clearTimeout(timer); done();
+      });
+    });
+  }
+
+  $('file').addEventListener('change', async e => {
+    const file = e.target.files[0]; e.target.value = '';
+    if (!file) return;
+    err(1); stage(1);
+    try {
+      busy(1, '動画から音声を取り出しています…');
+      let data = null;
+      try {
+        const [a, frames] = await Promise.all([extractAudio(file), extractFrames(file)]);
+        if (a.duration > 200) throw Object.assign(new Error('3分を超える動画です。リールの部分だけを画面収録し直してください。'), { user: true });
+        data = { audio: a.silent ? '' : a.audio, frames };
+        if (a.silent && !frames.length) throw new Error('音が入っていないようです');
+      } catch (x) {
+        if (x.user) throw x;
+        data = null;
+      }
+      busy(1, 'AIが文字にしています…（30秒〜1分ほどかかります）');
+      const d = data
+        ? await post('/api/read', data)
+        : await post('/api/video', null, { body: file, headers: { 'x-file-type': file.type || 'video/mp4' } });
+      st = { read: d }; save();
+      showRead(); stage(2); scrollTo('s2');
+    } catch (x) { err(1, x.message); }
+    finally { busy(1); }
+  });
+
+  function showRead() {
+    const d = st.read || {};
+    $('s2').hidden = false;
+    $('transcript').textContent = d.transcript || '（声は入っていませんでした）';
+    $('onscreen').textContent = d.onscreen || '';
+    $('onscreenBox').hidden = !d.onscreen;
+    $('a-hook').textContent = d.hook || ''; $('a-keep').textContent = d.keep || ''; $('a-ending').textContent = d.ending || '';
+    $('a-flow').innerHTML = ''; (d.flow || []).forEach((f, i) => { if (i) { const a = document.createElement('i'); a.textContent = '→'; $('a-flow').appendChild(a); } const s = document.createElement('span'); s.textContent = f; $('a-flow').appendChild(s); });
+    $('a-points').innerHTML = ''; (d.points || []).forEach(p => { const li = document.createElement('li'); li.textContent = p; $('a-points').appendChild(li); });
+    $('a-summary').textContent = d.summary || '';
+    if (st.analysisOpen) openAnalysis(false);
+  }
+  function openAnalysis(scroll = true) {
+    $('analysis').hidden = false; $('toAnalysis').hidden = true; $('s3').hidden = false;
+    st.analysisOpen = true; save(); stage(3);
+    if (scroll) scrollTo('analysis');
+  }
+  $('toAnalysis').addEventListener('click', () => openAnalysis());
+
+  // ---------- 3つの質問 ----------
+  document.querySelectorAll('[data-fill]').forEach(b => b.addEventListener('click', () => { const el = $(b.dataset.fill); el.value = b.textContent; el.dispatchEvent(new Event('input')); }));
+  ['genre', 'target', 'product'].forEach(k => { $(k).value = (st.q || {})[k] || ''; $(k).addEventListener('input', () => { st.q = Object.assign(st.q || {}, { [k]: $(k).value }); save(); }); });
+  const base = () => { const r = st.read || {}; return { transcript: r.transcript, onscreen: r.onscreen, analysis: r, genre: $('genre').value.trim(), target: $('target').value.trim() }; };
+
+  $('toSuggest').addEventListener('click', async () => {
+    err(3); busy(3, 'このリールに合う商品を探しています…');
+    try {
+      const d = await post('/api/suggest', base());
+      st.suggest = d.items || []; save(); showSuggest();
+    } catch (x) { err(3, x.message); } finally { busy(3); }
+  });
+  function showSuggest() {
+    const list = $('sugList'); list.innerHTML = '';
+    (st.suggest || []).forEach(it => {
+      const li = document.createElement('li');
+      const b = document.createElement('b'); b.textContent = it.name;
+      const p = document.createElement('p'); p.className = 'small'; p.textContent = it.why;
+      const kw = document.createElement('div'); kw.className = 'kw';
+      (it.keywords || []).forEach(k => { const btn = document.createElement('button'); btn.type = 'button'; btn.textContent = k; btn.addEventListener('click', async () => { if (await copyText(k)) toast('コピーしました'); }); kw.appendChild(btn); });
+      const use = document.createElement('button'); use.type = 'button'; use.className = 'btn sub sm'; use.textContent = 'これにする';
+      use.style.alignSelf = 'flex-start';
+      use.addEventListener('click', () => { $('product').value = it.name; $('product').dispatchEvent(new Event('input')); $('product').focus(); toast('③に入れました'); });
+      li.append(b, p, kw, use); list.appendChild(li);
+    });
+    $('suggest').hidden = !(st.suggest || []).length;
+  }
+
+  async function makeDrafts() {
+    const product = $('product').value.trim();
+    if (!product || product === '提案して') { err(3, '③に紹介する商品を入れてください。決まっていなければ「提案して」を押してください。'); $('product').focus(); return; }
+    err(3); err(4);
+    const n = $('s4').hidden ? 3 : 4;
+    busy(n, '参考リールの流れで、台本を3パターン作っています…');
+    try {
+      const d = await post('/api/drafts', Object.assign(base(), { product }));
+      st.drafts = d.drafts || []; st.product = product; st.final = null; save();
+      showDrafts(); stage(4); scrollTo('s4');
+    } catch (x) { err(n, x.message); } finally { busy(n); }
+  }
+  $('toDrafts').addEventListener('click', makeDrafts);
+  $('again').addEventListener('click', makeDrafts);
+
+  function showDrafts() {
+    const box = $('drafts'); box.innerHTML = '';
+    (st.drafts || []).forEach((dr, i) => {
+      const card = document.createElement('div'); card.className = 'draft';
+      const head = document.createElement('div'); head.className = 'draft-head';
+      const t = document.createElement('b'); t.textContent = (i + 1) + 'つ目：' + (dr.type || '');
+      const pick = document.createElement('button'); pick.className = 'btn sm'; pick.textContent = (i + 1) + 'つ目がいいです';
+      pick.addEventListener('click', () => polish(i));
+      head.append(t, pick);
+      const pre = document.createElement('pre'); pre.textContent = dr.script;
+      const len = document.createElement('p'); len.className = 'len'; len.textContent = readTime(dr.script);
+      card.append(head, pre, len); box.appendChild(card);
+    });
+    $('s4').hidden = !(st.drafts || []).length;
+  }
+  // 1分＝300文字（あこ在宅の台本と同じ目安）で、読み上げの秒数を出す
+  function count(s) { return String(s || '').replace(/[\s「」『』（）()、。！？!?…・]/g, '').length; }
+  function readTime(s) { const c = count(s); return '約' + c + '文字・声に出すと約' + Math.round(c / 5) + '秒'; }
+
+  async function polish(i, request) {
+    if (typeof i === 'number') { st.pick = i; save(); }
+    const draft = st.final && request ? st.final : (st.drafts || [])[st.pick];
+    if (!draft) return;
+    const n = $('s5').hidden ? 4 : 5;
+    err(4); err(5); busy(n, request ? '「' + request + '」で直しています…' : 'リールで伸ばしやすい形に整えています…');
+    try {
+      const d = await post('/api/polish', Object.assign(base(), { product: st.product, draft, request: request || '' }));
+      st.final = d; save(); showFinal(); stage(5); if (!request) scrollTo('s5');
+    } catch (x) { err(n, x.message); } finally { busy(n); }
+  }
+  function showFinal() {
+    const f = st.final; if (!f) return;
+    $('s5').hidden = false;
+    $('finalScript').textContent = f.script; $('finalCaption').textContent = f.caption;
+    const c = count(f.script), sec = Math.round(c / 5);
+    $('meter').textContent = '約' + c + '文字・声に出すと約' + sec + '秒' + (sec > 35 ? '（少し長めです）' : '');
+    $('meter').classList.toggle('over', sec > 35);
+    $('finalTips').innerHTML = ''; (f.tips || []).forEach(t => { const li = document.createElement('li'); li.textContent = t; $('finalTips').appendChild(li); });
+  }
+  document.querySelectorAll('[data-req]').forEach(b => b.addEventListener('click', () => polish(null, b.dataset.req)));
+  $('sendReq').addEventListener('click', () => { const r = $('request').value.trim(); if (r) { polish(null, r); $('request').value = ''; } });
+
+  document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', async () => {
+    if (await copyText($(b.dataset.copy).textContent)) { b.textContent = 'コピーしました'; b.classList.add('is-ok'); setTimeout(() => { b.textContent = 'コピー'; b.classList.remove('is-ok'); }, 1600); }
+  }));
+  $('restart').addEventListener('click', () => {
+    const q = st.q; st = { q }; save();
+    ['s2', 's3', 's4', 's5'].forEach(id => $(id).hidden = true);
+    $('analysis').hidden = true; $('toAnalysis').hidden = false; $('suggest').hidden = true;
+    stage(1); scrollTo('s1');
+  });
+
+  // 前回の続きから表示する
+  stage(1);
+  if (st.read) { showRead(); stage(2); }
+  if (st.analysisOpen) stage(3);
+  if (st.suggest) showSuggest();
+  if (st.drafts && st.drafts.length) { showDrafts(); stage(4); }
+  if (st.final) { showFinal(); stage(5); }
+})();
+</script>
+</body>
+</html>
