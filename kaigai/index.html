@@ -329,9 +329,9 @@ footer{font-size:12px;letter-spacing:.14em;color:var(--muted);text-align:center}
   <section class="prep" aria-labelledby="prep">
     <h2 id="prep">はじめる前に｜用意するもの</h2>
     <ul class="ingredients">
-      <li><span>Canva</span><span>無料プランで始められます。AIで作れる回数には上限があるので、47枚作るときは有料プランの無料体験も検討してください</span></li>
+      <li><span>Canva</span><span>無料プランで始められます。塗り絵の本をA4にする「リサイズ」は有料プランの機能なので、本を作るときは30日間の無料体験を使います</span></li>
       <li><span>ChatGPT</span><span>ネタ出しと、英語の文章づくりに使います</span></li>
-      <li><span>remove.bg</span><span>Canvaの無料プランで背景を消すときに使います</span></li>
+      <li><span>remove.bg</span><span>Canvaの無料プランで背景を消すときに使います。単独のサイトは2026年12月1日で終了し、Canvaに統合される予定です</span></li>
       <li><span>売る場所のアカウント</span><span>STEP4の一覧から、出す商品のぶんだけ用意します</span></li>
     </ul>
   </section>
@@ -434,7 +434,7 @@ footer{font-size:12px;letter-spacing:.14em;color:var(--muted);text-align:center}
     </div>
     <div class="recipe-body">
       <figure class="fig">
-        <svg viewBox="0 0 700 130" role="img" aria-label="くまを線画にする、47都道府県の一覧を作る、絵と白紙を交互に並べる、KDPに出す">
+        <svg viewBox="0 0 700 130" role="img" aria-label="くまを線画にする、47都道府県の一覧を作る、47枚作成で一気に作る、白紙と試し塗りを入れてKDPに出す">
           <rect class="bx" x="4" y="16" width="150" height="96" rx="14"/>
           <text class="n" x="18" y="42">1</text><text class="t" x="18" y="70">くまを</text><text class="t" x="18" y="94">線画にする</text>
           <path class="arh" d="M160 56 L170 64 L160 72 Z"/>
@@ -442,10 +442,10 @@ footer{font-size:12px;letter-spacing:.14em;color:var(--muted);text-align:center}
           <text class="n" x="192" y="42">2</text><text class="t" x="192" y="70">47都道府県の</text><text class="t" x="192" y="94">一覧を作る</text>
           <path class="arh" d="M344 56 L354 64 L344 72 Z"/>
           <rect class="bx-on" x="362" y="16" width="160" height="96" rx="14"/>
-          <text class="n" x="376" y="42">3</text><text class="t" x="376" y="70">絵と白紙を</text><text class="t" x="376" y="94">交互に並べる</text>
+          <text class="n" x="376" y="42">3</text><text class="t" x="376" y="70">「47枚作成」で</text><text class="t" x="376" y="94">一気に作る</text>
           <path class="arh" d="M528 56 L538 64 L528 72 Z"/>
           <rect class="bx-sun" x="546" y="16" width="150" height="96" rx="14"/>
-          <text class="n" x="560" y="42">4</text><text class="t" x="560" y="70">KDPに</text><text class="t" x="560" y="94">出す</text>
+          <text class="n" x="560" y="42">4</text><text class="t" x="560" y="70">白紙を入れて</text><text class="t" x="560" y="94">KDPに出す</text>
         </svg>
         <figcaption>47と決めてしまえば、終わりが最初から見えています。</figcaption>
       </figure>
@@ -463,7 +463,7 @@ footer{font-size:12px;letter-spacing:.14em;color:var(--muted);text-align:center}
 
       <div class="block">
         <h3><em>2-B</em>47都道府県の「描くもの」を一覧にする</h3>
-        <span class="where new">ChatGPT の新しいチャットに貼る（動画では出していません）</span>
+        <span class="where new">A4にリサイズしたあと、Canva AI に貼る</span>
         <div class="prompt">
           <div class="prompt-head"><span>プロンプト4｜47都道府県の一覧</span><button class="copy" type="button" data-target="p4">コピーする</button></div>
           <pre id="p4" tabindex="0">大人向けの塗り絵の本を作ります。テーマは「くまのキャラクターが47都道府県を旅する」です。
@@ -480,8 +480,8 @@ footer{font-size:12px;letter-spacing:.14em;color:var(--muted);text-align:center}
       </div>
 
       <div class="block">
-        <h3><em>2-C</em>1県ずつ線画を作る</h3>
-        <span class="where">Canva AI の画像を作る画面に貼る</span>
+        <h3><em>2-C</em>47都道府県の線画を作る</h3>
+        <span class="where">2-Bと同じCanva AIのチャットに続けて貼る</span>
         <div class="prompt">
           <div class="prompt-head"><span>プロンプト5｜県ごとの線画</span><button class="copy" type="button" data-target="p5">コピーする</button></div>
           <pre id="p5" tabindex="0">大人向けの塗り絵用の線画を作ってください。
@@ -490,16 +490,27 @@ footer{font-size:12px;letter-spacing:.14em;color:var(--muted);text-align:center}
 色は塗らずに黒い線だけ。線は太めで、塗るところは大きめに。
 背景はシンプルにして、白い余白を多めにしてください。</pre>
         </div>
-        <p class="small">【　】の中に2-Bの表の内容を入れて、上から順番に作っていきます。</p>
+        <p class="small">【　】はそのままで送ると、Canva AIが「どの都道府県から作りますか？」と聞いてくれます。「47枚作成」と送れば、一覧の上から順に作ってくれます。1県ずつ作りたいときは、【　】に2-Bの表の内容を入れて送ってください。</p>
       </div>
 
       <div class="block">
-        <h3><em>2-D</em>KDPに出す前のチェックリスト</h3>
+        <h3><em>2-D</em>白紙と「試し塗り」のページを入れる</h3>
+        <span class="where">同じチャットに続けて貼る</span>
+        <div class="prompt">
+          <div class="prompt-head"><span>プロンプト9｜白紙と試し塗り</span><button class="copy" type="button" data-target="p9">コピーする</button></div>
+          <pre id="p9" tabindex="0">各ページの間に白紙のページを入れてください。またそのページに「試し塗り」と小さく入れてください。</pre>
+        </div>
+        <p class="small">「合計〇枚の試し塗りページを入れてよいですか？」と確認されたら、「合っています！」と返せばOKです。</p>
+      </div>
+
+      <div class="block">
+        <h3><em>2-E</em>KDPに出す前のチェックリスト</h3>
         <ul class="checks">
-          <li><span>Canvaのカスタムサイズは、単位をミリにして、幅210×高さ297（A4）</span></li>
+          <li><span>「リサイズ」→「カスタムサイズ」で、デザインをA4（幅210×高さ297ミリ）にした</span></li>
+          <li><span>途中で作った一覧表のページは消した</span></li>
           <li><span>紙の端から1センチくらいは、何も置いていない</span></li>
           <li><span>絵のページの裏は白紙にしている（絵・白紙・絵・白紙の順）</span></li>
-          <li><span>白紙のページに、薄い四角と「試し塗り」の文字を入れた</span></li>
+          <li><span>白紙のページに「試し塗り」の文字を入れた</span></li>
           <li><span>目次や試し塗りのページを足して、ページ数を整えた</span></li>
           <li><span>KDPの計算ツールで、値段と手元に残る金額を確かめた</span></li>
           <li><span>表紙は、色を塗った見本の絵にした</span></li>
@@ -609,6 +620,7 @@ footer{font-size:12px;letter-spacing:.14em;color:var(--muted);text-align:center}
           <li><span>縦長の3対4（例：幅4500×高さ6000ピクセル）</span></li>
           <li><span>A4（幅210×高さ297ミリ）</span></li>
           <li><span>ファイルは、PNGかPDFでダウンロードする</span></li>
+          <li><span>商品の写真は、Canvaの素材で「モックアップ 壁」と検索し、額に入れて飾った見本を作った</span></li>
         </ul>
       </div>
 
